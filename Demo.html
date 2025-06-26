@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>独立标签输入框插件</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(to right, #3498db, #2c3e50);
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+    </style>
+    <link rel="stylesheet" href="inputtagsjs/inputtagsjs.css" media="all">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>독립형 레이블 입력 상자 플러그인</h1>
+        </header>
+        
+        <div class="content">
+            <div class="tag-input-container">
+                <div class="tag-input" id="tagInputExample">
+                    <!-- 标签将在这里动态生成 -->
+                    <input type="text" class="tag-input-input" placeholder="태그 입력...">
+                </div>
+                <div class="tag-count">태그 추가됨: <span id="tagCount">0</span>/10</div>
+                <input type="text" class="hidden-input" id="tagsValue">
+            </div>
+            
+            <div style="margin-top: 30px; background: #e8f4fc; padding: 20px; border-radius: 10px;">
+                <h3>현재 태그：</h3>
+                <div id="tagsValueDisplay" style="word-break: break-all; margin-top: 10px; padding: 10px; background: white;"></div>
+            </div>
+        </div>
+    </div>
+    <script src="inputtagsjs/inputtagsjs.js"></script>
+    <!-- 独立插件代码 -->
+    <script>
+
+        // 页面加载完成后初始化插件
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始化标签输入框
+            const tagInput = new TagInput(
+                document.getElementById('tagInputExample'), 
+                {
+                    maxTags: 10,
+                    delimiter: ',',
+                    tagCountElement: document.getElementById('tagCount')
+                }
+            );
+            
+            // 设置隐藏输入框
+            tagInput.hiddenInput = document.getElementById('tagsValue');
+            
+            // 显示当前标签值
+            function updateTagsDisplay() {
+                document.getElementById('tagsValueDisplay').textContent = tagInput.getTags();
+            }
+            
+            // 监听标签变化
+            tagInput.container.addEventListener('tagsChanged', updateTagsDisplay);
+            updateTagsDisplay();
+        });
+    </script>
+</body>
+</html>
