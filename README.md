@@ -54,6 +54,7 @@ tagInput.container.addEventListener('tagRemoved', () => {
 tagInput.container.addEventListener('tagsChanged', () => {
     console.log('태그 변경됨');
 });
+![](https://github.com/blandh26/inputtagsjs/blob/main/1.png)
 --------------------------------------------------------------------
 
 # TagInput 插件说明书 (中文)
